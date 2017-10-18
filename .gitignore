@@ -11,3 +11,4 @@
 !var/sessions/.gitkeep
 /vendor/
 /web/bundles/
+.idea
