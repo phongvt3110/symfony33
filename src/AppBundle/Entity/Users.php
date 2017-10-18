@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Users
  *
- * @ORM\Table(name="users")
+ * @ORM\Table(name="Users")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UsersRepository")
  */
 class Users
@@ -38,7 +38,7 @@ class Users
     /**
      * @var int
      *
-     * @ORM\Column(name="phone", type="integer", nullable=true)
+     * @ORM\Column(name="phone", type="string", length=20)
      */
     private $phone;
 
@@ -118,7 +118,7 @@ class Users
     /**
      * Set phone
      *
-     * @param integer $phone
+     * @param string $phone
      *
      * @return Users
      */
@@ -132,7 +132,7 @@ class Users
     /**
      * Get phone
      *
-     * @return int
+     * @return string
      */
     public function getPhone()
     {
