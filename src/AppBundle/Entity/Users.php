@@ -31,6 +31,27 @@ class Users
     /**
      * @var string
      *
+     * @ORM\Column(name="last_name", type="string", length=255)
+     */
+    private $lastName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="middle_name", type="string", length=255)
+     */
+    private $middleName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="full_name", type="string", length=255)
+     */
+    private $fullName;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="email", type="string", length=255, unique=true)
      */
     private $email;
@@ -89,6 +110,78 @@ class Users
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set lastName
+     *
+     * @param string $lastName
+     *
+     * @return Users
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * Get lastName
+     *
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * Set middleName
+     *
+     * @param string $middlename
+     *
+     * @return Users
+     */
+    public function setMiddleName($middlename)
+    {
+        $this->middleName = $middlename;
+
+        return $this;
+    }
+
+    /**
+     * Get middleName
+     *
+     * @return string
+     */
+    public function getMiddleName()
+    {
+        return $this->middleName;
+    }
+
+    /**
+     * Set fullName
+     *
+     * @param string $fullName
+     *
+     * @return Users
+     */
+    public function setFullName($fullName)
+    {
+        $this->fullName = $fullName;
+
+        return $this;
+    }
+
+    /**
+     * Get fullName
+     *
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->fullName;
     }
 
     /**
@@ -185,9 +278,6 @@ class Users
     public function getUpdatedAt()
     {
         return $this->updatedAt;
-    }
-
-    public static function createrandom(){
     }
 }
 
