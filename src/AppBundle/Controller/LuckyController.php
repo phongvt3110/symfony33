@@ -12,6 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Entity\Users;
+use Doctrine\ORM\EntityManagerInterface;
 
 
 class LuckyController extends Controller
@@ -47,12 +49,33 @@ class LuckyController extends Controller
      */
     public function showpageAction($page = 1){   //$page will have default value is 1
         $data = ['mobile' => 'IphoneX',
-                 'page'  => $page
-                ];
+            'page'  => $page
+        ];
+        $user = $this->getDoctrine()->getRepository(Users::class)->find(1);
+        $data['id'] = $user->getId();
+        $data['name'] = $user->getName();
+        $data['email'] = $user->getEmail();
+        $data['phone'] = $user->getPhone();
         return $this->render('frontend/pages.html.twig', [
             'data' => isset($data)? $data: null,
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR
         ]);
+    }
+
+    /**
+     * @Route("/lucky/create")
+     */
+    public function createuserAction(){
+        $user = new Users();
+        $user->setName("Phongabcghik");
+        $user->setEmail("phongdefghik@gmail.com");
+        $user->setPhone('0983397580');
+        $user->setCreatedAt(new \DateTime('now'));
+        $user->setUpdatedAt(new \DateTime('now'));
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+        return new Response('<h1>Create new user Action</h1>');
     }
 
     /**
