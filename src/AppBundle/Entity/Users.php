@@ -36,7 +36,7 @@ class Users
     private $email;
 
     /**
-     * @var int
+     * @var string
      *
      * @ORM\Column(name="phone", type="string", length=20)
      */
