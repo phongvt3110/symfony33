@@ -3,59 +3,57 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 /**
- * Users
+ * Orders
  *
- * @ORM\Table(name="Users")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\UsersRepository")
+ * @ORM\Table(name="Orders")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\OrdersRepository")
  */
-class Users
+class Orders
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="email", type="string", length=255, unique=true)
+     * @ORM\Column(name="customer_id", type="integer", nullable=false)
      */
-    private $email;
+    private $customerId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="phone", type="string", length=20)
+     * @ORM\Column(name="phone", type="string", length=20, nullable=false)
      */
     private $phone;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="datetime", nullable=true)
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    private $createdAt;
+    private $createdAt = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
-    private $updatedAt;
+    private $updatedAt = 'CURRENT_TIMESTAMP';
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
 
     /**
      * Get id
@@ -72,7 +70,7 @@ class Users
      *
      * @param string $name
      *
-     * @return Users
+     * @return Orders
      */
     public function setName($name)
     {
@@ -92,27 +90,27 @@ class Users
     }
 
     /**
-     * Set email
+     * Get customerId
      *
-     * @param string $email
-     *
-     * @return Users
+     * @return int
      */
-    public function setEmail($email)
+    public function getCustomerId()
     {
-        $this->email = $email;
-
-        return $this;
+        return $this->customerId;
     }
 
     /**
-     * Get email
+     * Set customerId
      *
-     * @return string
+     * @param int $customerId
+     *
+     * @return Orders
      */
-    public function getEmail()
+    public function setCustomerId($customerId)
     {
-        return $this->email;
+        $this->customerId = $customerId;
+
+        return $this;
     }
 
     /**
@@ -120,7 +118,7 @@ class Users
      *
      * @param string $phone
      *
-     * @return Users
+     * @return Orders
      */
     public function setPhone($phone)
     {
@@ -144,7 +142,7 @@ class Users
      *
      * @param \DateTime $createdAt
      *
-     * @return Users
+     * @return Orders
      */
     public function setCreatedAt($createdAt)
     {
@@ -168,7 +166,7 @@ class Users
      *
      * @param \DateTime $updatedAt
      *
-     * @return Users
+     * @return Orders
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -187,7 +185,5 @@ class Users
         return $this->updatedAt;
     }
 
-    public static function createrandom(){
-    }
 }
 

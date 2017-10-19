@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Repository\UsersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -75,6 +76,8 @@ class LuckyController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
+        UsersRepository::findById(1);
+        $usr = new UsersRepository();
         return new Response('<h1>Create new user Action</h1>');
     }
 

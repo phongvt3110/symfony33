@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Users
+ * Products
  *
- * @ORM\Table(name="Users")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\UsersRepository")
+ * @ORM\Table(name="Products")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductsRepository")
  */
-class Users
+class Products
 {
     /**
      * @var int
@@ -29,33 +29,32 @@ class Users
     private $name;
 
     /**
-     * @var string
+     * @var int
      *
-     * @ORM\Column(name="email", type="string", length=255, unique=true)
+     * @ORM\Column(name="type", type="integer", nullable=true)
      */
-    private $email;
+    private $type;
 
     /**
-     * @var string
+     * @var float
      *
-     * @ORM\Column(name="phone", type="string", length=20)
+     * @ORM\Column(name="price", type="decimal", scale=2)
      */
-    private $phone;
+    private $price;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="datetime", nullable=true)
+     * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
-
 
     /**
      * Get id
@@ -92,51 +91,51 @@ class Users
     }
 
     /**
-     * Set email
+     * Get type
      *
-     * @param string $email
-     *
-     * @return Users
+     * @return int
      */
-    public function setEmail($email)
+    public function getType()
     {
-        $this->email = $email;
+        return $this->type;
+    }
+
+    /**
+     * Set price
+     *
+     * @param int $price
+     *
+     * @return Products
+     */
+    public function setType($price)
+    {
+        $this->name = $price;
 
         return $this;
     }
 
     /**
-     * Get email
+     * Get price
      *
-     * @return string
+     * @return int
      */
-    public function getEmail()
+    public function getPrice()
     {
-        return $this->email;
+        return $this->price;
     }
 
     /**
-     * Set phone
+     * Set price
      *
-     * @param string $phone
+     * @param int $price
      *
-     * @return Users
+     * @return Products
      */
-    public function setPhone($phone)
+    public function setPrice($price)
     {
-        $this->phone = $phone;
+        $this->name = $price;
 
         return $this;
-    }
-
-    /**
-     * Get phone
-     *
-     * @return string
-     */
-    public function getPhone()
-    {
-        return $this->phone;
     }
 
     /**
@@ -185,9 +184,6 @@ class Users
     public function getUpdatedAt()
     {
         return $this->updatedAt;
-    }
-
-    public static function createrandom(){
     }
 }
 
