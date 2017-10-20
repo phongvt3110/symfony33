@@ -13,33 +13,20 @@ use Doctrine\ORM\Mapping;
 
 class UsersRepository extends \Doctrine\ORM\EntityRepository
 {
-    private $name = ['Phong', 'Hung','Anh','Thanh','Dung','Diep','Truong','Minh','','Huan','Cường','Bách',
-                    'Manh','Lợi','Thành','Phung','Quynh','Lan','Hong','Cuc','Trong','Linh','Trâm','Oanh','Bắc','Nam','Đông'];
-    private $lastname = ['Le','Nguyen','Tran','Ly','Doan','Vu','Phung','Trinh','Cù','Vũ'];
-    private $middlename = ['thi','Ngoc','Huu','Xuan','Ngoc Tung','thi Kim','thi Thu','Thu','van','Ngọc Tâm','Tân Hoàng','Đại','Tùng','Bách','thi Linh','Trang'];
-//    public function __construct(EntityManager $em, Mapping\ClassMetadata $class)
-//    {
-//        parent::__construct($em, $class);
-//    }
-
     public function findById($id) {
-        $this->find($id);
+        return $this->find($id);
     }
 
-    public function createRandom($n=10) {
-
+    public function findByName($name) {
+        return $this->createQueryBuilder('u')
+            ->where('u.name = :name')
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getResult();
     }
-
-    private function makeRandomName() {
-        return $this->name[intval(rand(0,count($this->name)-1))];
-    }
-    private function makeRandomLastname() {
-        return $this->lastname[intval(rand(0,count($this->lastname)-1))];
-    }
-    private function makeRandomMiddlename() {
-        return $this->middlename[intval(rand(0,count($this->middlename)-1))];
-    }
-    private function makeRandomPhone() {
-        return '09'.strval(rand(10000000,99999999));
+    public function add($user) {
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+        return $user;
     }
 }

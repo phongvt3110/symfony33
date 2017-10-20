@@ -1,34 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: phongvt
- * Date: 10/17/17
- * Time: 11:07 AM
- */
-
 namespace AppBundle\Controller;
 
-use AppBundle\Repository\UsersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Users;
-use Doctrine\ORM\EntityManagerInterface;
 
 
 class LuckyController extends Controller
 {
-//    private $name = ['Phong', 'Hung','Anh','Thanh','Dung','Diep','Truong','Minh','','Huan','Cuong','Bach',
-//        'Manh','Loi','Thanh','Phung','Quynh','Lan','Hong','Cuc','Trong','Linh','Trinh','Oanh','Bang','Nam','Dong','Dan'];
-//    private $lastname = ['Le','Nguyen','Tran','Ly','Doan','Vu','Phung','Trinh'];
-//    private $middlename = ['thi','Ngoc','Huu','Xuan','Ngoc Tung','thi Kim','thi Thu','Thu','van','Ngọc Tam','Tan Hoang','Dai','Tung','thi Linh','Trang'];
-
-    private $name = ['Phong', 'Hung','Anh','Thanh','Dung','Diep','Truong','Minh','','Huan','Cường','Bách',
-        'Manh','Lợi','Thành','Phung','Quynh','Lan','Hong','Cuc','Trong','Linh','Trâm','Oanh','Bắc','Nam','Đông'];
-    private $lastname = ['Le','Nguyen','Tran','Ly','Doan','Vu','Phung','Trinh','Cù','Vũ'];
-    private $middlename = ['thi','Ngoc','Huu','Xuan','Ngoc Tung','thi Kim','thi Thu','Thu','van','Ngọc Tâm','Tân Hoàng','Đại','Tùng','Bách','thi Linh','Trang'];
-
     /**
      * @Route("/lucky/number")
      */
@@ -78,7 +59,7 @@ class LuckyController extends Controller
      */
     public function createuserAction(){
         $user = new Users();
-        $user->setName("Phong");
+        $user->setName("Phong123456");
         $user->setMiddleName("Tung");
         $user->setLastName("Vu");
         $user->setFullName($user->getLastName().' '.$user->getMiddleName().' '.$user->getName());
@@ -86,40 +67,26 @@ class LuckyController extends Controller
         $user->setPhone('0983397580');
         $user->setCreatedAt(new \DateTime('now'));
         $user->setUpdatedAt(new \DateTime('now'));
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
-        print_r($user);
+        $u = $this->getDoctrine()->getRepository(Users::class)->add($user);
+        print_r($u);
         return new Response('<h1>Create new user Action</h1>');
     }
 
     /**
-     * @Route("/data/create/{n}",requirements={"n": "\d+"})
+     * @Route("/data/find/{name}")
      */
-    public function createusersAction($n = 1){
-        for($i = 0; $i < intval($n); $i++){
-            $user = new Users();
-            $user->setName($this->makeRandomName());
-            $user->setMiddleName($this->makeRandomMiddlename());
-            $user->setLastName($this->makeRandomLastname());
-            $user->setFullName($user->getLastName().' ' . $user->getMiddleName(). ' ' . $user->getName());
-            $user->setEmail($this->stripVN($user->getName().$this->stripVN(substr($user->getLastName(),0,1))).'@gmail.com');
-            $user->setPhone($this->makeRandomPhone());
-            $user->setCreatedAt(new \DateTime('now'));
-            $user->setUpdatedAt(new \DateTime('now'));
-            $this->getDoctrine()->getEntityManager()->persist($user);
-            $this->getDoctrine()->getEntityManager()->flush();
-        }
-        return new Response("<h1>Create new $n user Action</h1>");
+    public function findusersAction($name = 'phong'){
+        $users = $this->getDoctrine()->getRepository(Users::class)->findByName($name);
+        print_r($users[0]);
+        return new Response("<h1>Find user Action</h1>");
     }
 
     /**
      * @Route("/data/list")
      */
     public function listAction(){
-        $em = $this->getDoctrine()->getManager();
-        $user=$em->getRepository(Users::class)->find(1);
-        print_r($user);
+        $users = $this->getDoctrine()->getRepository(Users::class)->findByName('Hung');
+        print_r($users);
         return new Response("<h1> User info</h1><br>");
     }
 
@@ -156,19 +123,6 @@ class LuckyController extends Controller
             'data' => isset($data)? $data: null,
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR
         ]);
-    }
-
-    private function makeRandomName() {
-        return $this->name[intval(rand(0,count($this->name)-1))];
-    }
-    private function makeRandomLastname() {
-        return $this->lastname[intval(rand(0,count($this->lastname)-1))];
-    }
-    private function makeRandomMiddlename() {
-        return $this->middlename[intval(rand(0,count($this->middlename)-1))];
-    }
-    private function makeRandomPhone() {
-        return '09'.strval(rand(10000000,99999999));
     }
 
     private function stripVN($str) {
