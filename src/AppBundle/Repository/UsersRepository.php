@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping;
 class UsersRepository extends \Doctrine\ORM\EntityRepository
 {
     private $name = ['Phong', 'Hung','Anh','Thanh','Dung','Diep','Truong','Minh','','Huan','Cường','Bách',
-                    'Manh','Lợi','Thành','Phung','Quynh','Lan','Hong','Cuc','Trong','Linh','Trâm','Oanh','Bắc','Nam','Đông',''];
+                    'Manh','Lợi','Thành','Phung','Quynh','Lan','Hong','Cuc','Trong','Linh','Trâm','Oanh','Bắc','Nam','Đông'];
     private $lastname = ['Le','Nguyen','Tran','Ly','Doan','Vu','Phung','Trinh','Cù','Vũ'];
     private $middlename = ['thi','Ngoc','Huu','Xuan','Ngoc Tung','thi Kim','thi Thu','Thu','van','Ngọc Tâm','Tân Hoàng','Đại','Tùng','Bách','thi Linh','Trang'];
 //    public function __construct(EntityManager $em, Mapping\ClassMetadata $class)
@@ -27,19 +27,6 @@ class UsersRepository extends \Doctrine\ORM\EntityRepository
     }
 
     public function createRandom($n=10) {
-        $user = new Users();
-        for($i = 0; $i < $n; $i++){
-            $user->setName($this->makeRandomName());
-            $user->setMiddleName($this->makeRandomMiddlename());
-            $user->setLastName($this->makeRandomLastname());
-            $user->setFullName($user->getLastName().' ' . $user->getMiddleName(). ' ' . $user->getName());
-            $user->setEmail($user->getName().substr($user->getMiddleName(),0,1).substr($user->getLastName(),0,1).'@gmail.com');
-            $user->setPhone($this->makeRandomPhone());
-            $user->setCreatedAt(new \DateTime('now'));
-            $user->setUpdatedAt(new \DateTime('now'));
-            $this->getEntityManager()->persist($user);
-            $this->getEntityManager()->flush();
-        }
 
     }
 
@@ -50,7 +37,7 @@ class UsersRepository extends \Doctrine\ORM\EntityRepository
         return $this->lastname[intval(rand(0,count($this->lastname)-1))];
     }
     private function makeRandomMiddlename() {
-        return $this->middlename[intval(rand(0,count($this->name)-1))];
+        return $this->middlename[intval(rand(0,count($this->middlename)-1))];
     }
     private function makeRandomPhone() {
         return '09'.strval(rand(10000000,99999999));
