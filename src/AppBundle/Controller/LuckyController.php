@@ -1,17 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: phongvt
- * Date: 10/17/17
- * Time: 11:07 AM
- */
-
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Entity\Users;
 
 
 class LuckyController extends Controller
@@ -47,12 +41,53 @@ class LuckyController extends Controller
      */
     public function showpageAction($page = 1){   //$page will have default value is 1
         $data = ['mobile' => 'IphoneX',
-                 'page'  => $page
-                ];
+            'page'  => $page
+        ];
+        $user = $this->getDoctrine()->getRepository(Users::class)->find(1);
+        $data['id'] = $user->getId();
+        $data['name'] = $user->getName();
+        $data['email'] = $user->getEmail();
+        $data['phone'] = $user->getPhone();
         return $this->render('frontend/pages.html.twig', [
             'data' => isset($data)? $data: null,
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR
         ]);
+    }
+
+    /**
+     * @Route("/data/createuser")
+     */
+    public function createuserAction(){
+        $user = new Users();
+        $user->setName("Phong123456");
+        $user->setMiddleName("Tung");
+        $user->setLastName("Vu");
+        $user->setFullName($user->getLastName().' '.$user->getMiddleName().' '.$user->getName());
+        $user->setEmail("phongvt6510@gmail.com");
+        $user->setPhone('0983397580');
+        $user->setCreatedAt(new \DateTime('now'));
+        $user->setUpdatedAt(new \DateTime('now'));
+        $u = $this->getDoctrine()->getRepository(Users::class)->add($user);
+        print_r($u);
+        return new Response('<h1>Create new user Action</h1>');
+    }
+
+    /**
+     * @Route("/data/find/{name}")
+     */
+    public function findusersAction($name = 'phong'){
+        $users = $this->getDoctrine()->getRepository(Users::class)->findByName($name);
+        print_r($users[0]);
+        return new Response("<h1>Find user Action</h1>");
+    }
+
+    /**
+     * @Route("/data/list")
+     */
+    public function listAction(){
+        $users = $this->getDoctrine()->getRepository(Users::class)->findByName('Hung');
+        print_r($users);
+        return new Response("<h1> User info</h1><br>");
     }
 
     /**
@@ -88,5 +123,24 @@ class LuckyController extends Controller
             'data' => isset($data)? $data: null,
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR
         ]);
+    }
+
+    private function stripVN($str) {
+        $str = preg_replace("/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/", 'a', $str);
+        $str = preg_replace("/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/", 'e', $str);
+        $str = preg_replace("/(ì|í|ị|ỉ|ĩ)/", 'i', $str);
+        $str = preg_replace("/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/", 'o', $str);
+        $str = preg_replace("/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/", 'u', $str);
+        $str = preg_replace("/(ỳ|ý|ỵ|ỷ|ỹ)/", 'y', $str);
+        $str = preg_replace("/(đ)/", 'd', $str);
+
+        $str = preg_replace("/(À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ)/", 'A', $str);
+        $str = preg_replace("/(È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ)/", 'E', $str);
+        $str = preg_replace("/(Ì|Í|Ị|Ỉ|Ĩ)/", 'I', $str);
+        $str = preg_replace("/(Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ)/", 'O', $str);
+        $str = preg_replace("/(Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ)/", 'U', $str);
+        $str = preg_replace("/(Ỳ|Ý|Ỵ|Ỷ|Ỹ)/", 'Y', $str);
+        $str = preg_replace("/(Đ)/", 'D', $str);
+        return $str;
     }
 }

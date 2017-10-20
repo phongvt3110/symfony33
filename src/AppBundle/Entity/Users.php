@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Users
  *
- * @ORM\Table(name="users")
+ * @ORM\Table(name="Users")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UsersRepository")
  */
 class Users
@@ -31,14 +31,35 @@ class Users
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255, unique=true)
+     * @ORM\Column(name="last_name", type="string", length=255)
+     */
+    private $lastName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="middle_name", type="string", length=255)
+     */
+    private $middleName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="full_name", type="string", length=255)
+     */
+    private $fullName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255)
      */
     private $email;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="phone", type="integer", nullable=true)
+     * @ORM\Column(name="phone", type="string", length=20)
      */
     private $phone;
 
@@ -92,6 +113,78 @@ class Users
     }
 
     /**
+     * Set lastName
+     *
+     * @param string $lastName
+     *
+     * @return Users
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * Get lastName
+     *
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * Set middleName
+     *
+     * @param string $middlename
+     *
+     * @return Users
+     */
+    public function setMiddleName($middlename)
+    {
+        $this->middleName = $middlename;
+
+        return $this;
+    }
+
+    /**
+     * Get middleName
+     *
+     * @return string
+     */
+    public function getMiddleName()
+    {
+        return $this->middleName;
+    }
+
+    /**
+     * Set fullName
+     *
+     * @param string $fullName
+     *
+     * @return Users
+     */
+    public function setFullName($fullName)
+    {
+        $this->fullName = $fullName;
+
+        return $this;
+    }
+
+    /**
+     * Get fullName
+     *
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->fullName;
+    }
+
+    /**
      * Set email
      *
      * @param string $email
@@ -118,7 +211,7 @@ class Users
     /**
      * Set phone
      *
-     * @param integer $phone
+     * @param string $phone
      *
      * @return Users
      */
@@ -132,7 +225,7 @@ class Users
     /**
      * Get phone
      *
-     * @return int
+     * @return string
      */
     public function getPhone()
     {
