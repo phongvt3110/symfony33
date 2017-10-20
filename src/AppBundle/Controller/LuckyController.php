@@ -64,20 +64,33 @@ class LuckyController extends Controller
     }
 
     /**
-     * @Route("/lucky/create")
+     * @Route("/data/createuser")
      */
     public function createuserAction(){
         $user = new Users();
-        $user->setName("Phongabcghik");
-        $user->setEmail("phongdefghik@gmail.com");
+        $user->setName("Phong");
+        $user->setMiddleName("Tung");
+        $user->setLastName("Vu");
+        $user->setFullName($user->getLastName().' '.$user->getMiddleName().' '.$user->getName());
+        $user->setEmail("phongvt651043@gmail.com");
         $user->setPhone('0983397580');
         $user->setCreatedAt(new \DateTime('now'));
         $user->setUpdatedAt(new \DateTime('now'));
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
-        $usr = new UsersRepository();
         return new Response('<h1>Create new user Action</h1>');
+    }
+
+    /**
+     * @Route("/data/create/{n}",requirements={"n": "\d+"})
+     */
+    public function createusersAction($n = 1){
+        $userrepo = new UsersRepository();
+        //$userrepo->createRandom($n);
+        $usr = $userrepo->findById(intval($n));
+        print_r($usr);
+        return new Response("<h1>Create new $n user Action</h1>");
     }
 
     /**

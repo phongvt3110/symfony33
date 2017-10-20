@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 use AppBundle\Entity\Users;
+use Doctrine\ORM\Mapping;
 
 /**
  * UsersRepository
@@ -16,23 +17,28 @@ class UsersRepository extends \Doctrine\ORM\EntityRepository
                     'Manh','Lợi','Thành','Phung','Quynh','Lan','Hong','Cuc','Trong','Linh','Trâm','Oanh','Bắc','Nam','Đông',''];
     private $lastname = ['Le','Nguyen','Tran','Ly','Doan','Vu','Phung','Trinh','Cù','Vũ'];
     private $middlename = ['thi','Ngoc','Huu','Xuan','Ngoc Tung','thi Kim','thi Thu','Thu','van','Ngọc Tâm','Tân Hoàng','Đại','Tùng','Bách','thi Linh','Trang'];
-    public static function findById($id) {
-        self::find($id);
+//    public function __construct(EntityManager $em, Mapping\ClassMetadata $class)
+//    {
+//        parent::__construct($em, $class);
+//    }
+
+    public function findById($id) {
+        $this->find($id);
     }
 
-    public static function createRandom($n=10) {
+    public function createRandom($n=10) {
         $user = new Users();
         for($i = 0; $i < $n; $i++){
-            $user->setName(self::makeRandomName());
-            $user->setMiddleName(self::makeRandomMiddlename());
-            $user->setLastName(self::makeRandomLastname());
+            $user->setName($this->makeRandomName());
+            $user->setMiddleName($this->makeRandomMiddlename());
+            $user->setLastName($this->makeRandomLastname());
             $user->setFullName($user->getLastName().' ' . $user->getMiddleName(). ' ' . $user->getName());
             $user->setEmail($user->getName().substr($user->getMiddleName(),0,1).substr($user->getLastName(),0,1).'@gmail.com');
-            $user->setPhone(self::makeRandomPhone());
+            $user->setPhone($this->makeRandomPhone());
             $user->setCreatedAt(new \DateTime('now'));
             $user->setUpdatedAt(new \DateTime('now'));
-            self::getEntityManager()->persist($user);
-            self::getEntityManager()->flush();
+            $this->getEntityManager()->persist($user);
+            $this->getEntityManager()->flush();
         }
 
     }
