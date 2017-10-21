@@ -115,7 +115,7 @@ class LuckyController extends Controller
     }
 
     /**
-     * @Route("/home")
+     * @Route("/luckyhome")
      */
     public function homeAction(Request $request){
         $data = ['mobile' => 'IphoneX'];
