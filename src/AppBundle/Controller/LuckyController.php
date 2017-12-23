@@ -59,7 +59,7 @@ class LuckyController extends Controller
      */
     public function createuserAction(){
         $user = new Users();
-        $user->setName("Phong123456");
+        $user->setName("Phong");
         $user->setMiddleName("Tung");
         $user->setLastName("Vu");
         $user->setFullName($user->getLastName().' '.$user->getMiddleName().' '.$user->getName());

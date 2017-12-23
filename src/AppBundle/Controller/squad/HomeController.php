@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class HomeController extends Controller
 {
     /**
-     * @Route("/squad", name="squadhomepage")
+     * @Route("/", name="squadhomepage")
      */
     public function indexAction() {
         $data = [];
