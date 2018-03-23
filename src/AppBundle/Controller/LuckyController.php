@@ -59,7 +59,7 @@ class LuckyController extends Controller
      */
     public function createuserAction(){
         $user = new Users();
-        $user->setName("Phong123456");
+        $user->setName("Phong");
         $user->setMiddleName("Tung");
         $user->setLastName("Vu");
         $user->setFullName($user->getLastName().' '.$user->getMiddleName().' '.$user->getName());
@@ -115,7 +115,7 @@ class LuckyController extends Controller
     }
 
     /**
-     * @Route("/home")
+     * @Route("/luckyhome")
      */
     public function homeAction(Request $request){
         $data = ['mobile' => 'IphoneX'];
